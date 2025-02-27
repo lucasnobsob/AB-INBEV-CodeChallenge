@@ -58,6 +58,7 @@ namespace AB_INBEV.Infra.CrossCutting.IoC
 
             // Infra - Data
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPhoneRepository, PhoneRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Infra - Data EventSourcing
