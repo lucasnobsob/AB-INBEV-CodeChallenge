@@ -1,0 +1,54 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Visual Studio
+*.vs/
+*.vcxproj*
+*.csproj.user
+*.sln
+
+# Entity Framework Migrations
+Migrations/
+
+# Database
+*.mdf
+*.ldf
+*.sqlite
+
+# Secrets
+appsettings.json
+appsettings.*.json
+secrets.json
+.env
+
+# NuGet Packages
+packages/
+*.nupkg
+project.lock.json
+
+# Rider
+*.DotSettings.user
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
