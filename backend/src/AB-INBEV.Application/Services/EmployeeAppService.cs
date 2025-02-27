@@ -15,18 +15,21 @@ namespace AB_INBEV.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IPhoneRepository _phoneRepository;
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
         public EmployeeAppService(IMapper mapper,
                                   IEmployeeRepository employeeRepository,
                                   IMediatorHandler bus,
-                                  IEventStoreRepository eventStoreRepository)
+                                  IEventStoreRepository eventStoreRepository,
+                                  IPhoneRepository phoneRepository)
         {
             _mapper = mapper;
             _employeeRepository = employeeRepository;
             Bus = bus;
             _eventStoreRepository = eventStoreRepository;
+            _phoneRepository = phoneRepository;
         }
 
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
@@ -55,6 +58,7 @@ namespace AB_INBEV.Application.Services
 
         public async Task Update(EmployeeViewModel employeeViewModel)
         {
+            await _phoneRepository.Remove(employeeViewModel.Id);
             var updateCommand = _mapper.Map<UpdateEmployeeCommand>(employeeViewModel);
             await Bus.SendCommand(updateCommand);
         }
