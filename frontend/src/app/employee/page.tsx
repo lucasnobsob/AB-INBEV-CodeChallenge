@@ -88,6 +88,7 @@ const EmployeeCrud = () => {
       }
 
       fetchEmployees();
+      setPhones([]);
       setNewEmployee({
         id: "",
         firstName: "",
@@ -104,6 +105,7 @@ const EmployeeCrud = () => {
   };
 
   const handleEdit = (employee: Employee) => {
+    setPhones(employee.phones);
     setEditEmployee(employee);
   };
 
@@ -124,6 +126,7 @@ const EmployeeCrud = () => {
         throw new Error("Failed to update employee");
       }
       fetchEmployees();
+      setPhones([]);
       setEditEmployee(null);
     } catch (error) {
       setError("Failed to update employee");
