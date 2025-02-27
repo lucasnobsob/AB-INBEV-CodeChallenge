@@ -58,7 +58,7 @@ namespace AB_INBEV.Application.Services
 
         public async Task Update(EmployeeViewModel employeeViewModel)
         {
-            await _phoneRepository.Remove(employeeViewModel.Id);
+            await _phoneRepository.RemoveByEmployeeId(employeeViewModel.Id);
             var updateCommand = _mapper.Map<UpdateEmployeeCommand>(employeeViewModel);
             await Bus.SendCommand(updateCommand);
         }

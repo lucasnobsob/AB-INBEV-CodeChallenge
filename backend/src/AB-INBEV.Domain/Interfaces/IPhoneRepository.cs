@@ -4,5 +4,6 @@ namespace AB_INBEV.Domain.Interfaces
 {
     public interface IPhoneRepository : IRepository<Phone>
     {
+        Task RemoveByEmployeeId(Guid employeeId);
     }
 }
