@@ -17,7 +17,6 @@ namespace AB_INBEV.Application.UnitTests.Services
     {
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IEmployeeRepository> _employeeRepositoryMock;
-        private readonly Mock<IPhoneRepository> _phoneRepositoryMock;
         private readonly Mock<IMediatorHandler> _mediatorHandlerMock;
         private readonly Mock<IEventStoreRepository> _eventStoreRepositoryMock;
         private readonly EmployeeAppService _employeeAppService;
@@ -28,7 +27,6 @@ namespace AB_INBEV.Application.UnitTests.Services
         {
             _mapperMock = new Mock<IMapper>();
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
-            _phoneRepositoryMock = new Mock<IPhoneRepository>();
             _mediatorHandlerMock = new Mock<IMediatorHandler>();
             _eventStoreRepositoryMock = new Mock<IEventStoreRepository>();
             _employeeDummyFactory = new EmployeeDummyFactory();
@@ -37,8 +35,7 @@ namespace AB_INBEV.Application.UnitTests.Services
                 _mapperMock.Object,
                 _employeeRepositoryMock.Object,
                 _mediatorHandlerMock.Object,
-                _eventStoreRepositoryMock.Object,
-                _phoneRepositoryMock.Object
+                _eventStoreRepositoryMock.Object
             );
         }
 

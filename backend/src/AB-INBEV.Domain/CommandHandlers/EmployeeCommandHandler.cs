@@ -14,15 +14,18 @@ namespace AB_INBEV.Domain.CommandHandlers
         IRequestHandler<RemoveEmployeeCommand, bool>
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IPhoneRepository _phoneRepository;
         private readonly IMediatorHandler Bus;
 
         public EmployeeCommandHandler(IEmployeeRepository employeeRepository,
                                       IUnitOfWork uow,
                                       IMediatorHandler bus,
-                                      INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
+                                      INotificationHandler<DomainNotification> notifications,
+                                      IPhoneRepository phoneRepository) : base(uow, bus, notifications)
         {
             _employeeRepository = employeeRepository;
             Bus = bus;
+            _phoneRepository = phoneRepository;
         }
 
         public async Task<bool> Handle(RegisterNewEmployeeCommand message, CancellationToken cancellationToken)
@@ -66,16 +69,17 @@ namespace AB_INBEV.Domain.CommandHandlers
             {
                 if (!existingCustomer.Equals(employee))
                 {
-                    Bus.RaiseEvent(new DomainNotification(message.MessageType, "The employee e-mail has already been taken."));
+                    await Bus.RaiseEvent(new DomainNotification(message.MessageType, "The employee e-mail has already been taken."));
                     return await Task.FromResult(false);
                 }
             }
 
+            await _phoneRepository.RemoveByEmployeeId(message.Id);
             _employeeRepository.Update(employee);
 
             if (Commit())
             {
-                Bus.RaiseEvent(new EmployeeUpdatedEvent(employee.Id, employee.FirstName, employee.Email, employee.BirthDate));
+                await Bus.RaiseEvent(new EmployeeUpdatedEvent(employee.Id, employee.FirstName, employee.Email, employee.BirthDate));
             }
 
             return await Task.FromResult(true);
@@ -93,7 +97,7 @@ namespace AB_INBEV.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new EmployeeRemovedEvent(message.Id));
+                await Bus.RaiseEvent(new EmployeeRemovedEvent(message.Id));
             }
 
             return await Task.FromResult(true);
